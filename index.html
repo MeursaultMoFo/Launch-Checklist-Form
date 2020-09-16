@@ -5,24 +5,57 @@
         <link rel = "stylesheet" type = "text/css" href = "styles.css" />
         <script src = "script.js"></script>
     </head>
+
+    <script>
+        
+        window.addEventListener("load", function() {
+           let form = document.querySelector("form");
+           form.addEventListener("submit", function(event) {
+              let pilotInput = document.querySelector("input[name=pilotName]");
+              let copilotInput = document.querySelector("input[name=copilotName]");
+                            
+              if (pilotInput.value === ""  || copilotInput.value === "") {
+                 alert("All fields are required!");
+                 // stop the form submission
+                 event.preventDefault();
+              }
+           });
+           form.addEventListener("submit", function(event) {
+               var letters = /^[a-zA-Z]+$/;
+               let pilotInput = document.querySelector("input[name=pilotName]");
+               let copilotInput = document.querySelector("input[name=copilotName]");
+
+               if (pilotInput.value.match(letters)) {
+                   return true;
+               } else {
+                   alert("Please use letters only for names.");
+                   event.preventDefault();
+               }
+           });
+        
+        });
+
+        
+    </script>
+
     <body>
         <h1>Launch Checklist Form</h1>
         <div id="missionTarget">
             <!-- Fetch some planetary data -->
         </div> 
         <div id="launchForm">
-            <form>
+            <form action:"", method:"POST">
                 <div style="display:flex; flex-direction: row; justify-content: center; align-items: center; margin: 8 0;">
-                    <label>Pilot Name <input type="text" name="pilotName" id="pilotName"/></label>
+                    <label>Pilot Name <input type="text" name="pilotName" id="pilotName" /></label>
                 </div>
                 <div style="display:flex; flex-direction: row; justify-content: center; align-items: center; margin: 8 0;">
-                    <label>Co-pilot Name <input type="text" name="copilotName"/></label>
+                    <label>Co-pilot Name <input type="text" name="copilotName" /></label>
                 </div>
                 <div style="display:flex; flex-direction: row; justify-content: center; align-items: center; margin: 8 0;">
-                    <label>Fuel Level (L) <input type="text" name="fuelLevel"/></label> 
+                    <label>Fuel Level (L) <input type="number" name="fuelLevel"/></label> 
                 </div>
                 <div style="display:flex; flex-direction: row; justify-content: center; align-items: center; margin: 8 0;">
-                    <label>Cargo Mass (kg) <input type="text" name="cargoMass"/></label>
+                    <label>Cargo Mass (kg) <input type="number" name="cargoMass"/></label>
                 </div>
                 <button id="formSubmit">Submit</button>
             </form>
@@ -31,8 +64,9 @@
             <h2 id="launchStatus">Awaiting Information Before Launch</h2>
             <div  id="faultyItems">
                 <ol>
-                    <li id="pilotStatus">Pilot Ready</li>
-                    <li id="copilotStatus">Co-pilot Ready</li>
+                    <li id="pilotStatus"><script>document.getElementById("pilotStatus").innerHTML = `Pilot ${pilotName} Ready`
+                    </script>Pilot ${pilotName} Ready</li>
+                    <li id="copilotStatus">Co-pilot ${copilotName} Ready</li>
                     <li id="fuelStatus">Fuel level high enough for launch</li>
                     <li id="cargoStatus">Cargo mass low enough for launch</li>
                 </ol>
